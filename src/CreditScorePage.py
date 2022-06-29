@@ -113,5 +113,5 @@ class CreditScorePage():
         element.click()
 
     def click_new_application_confirm(self, time_sleep=1):
-        element = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(CreditScorePage.CLOSE_NEW_APPLICATION_BUTTON))
+        element = WebDriverWait(self, time_sleep).until(EC.presence_of_element_located(CreditScorePage.CLOSE_NEW_APPLICATION_BUTTON))
         element.click()

@@ -25,7 +25,6 @@ class LoginPage():
     def press_button_login(self, time_sleep=0):
         element = WebDriverWait(self, time_sleep).until(EC.element_to_be_clickable(LoginPage.LOGIN_BUTTON))
         element.click()
-        element.click()
 
 
 

@@ -20,8 +20,8 @@ def driver(request):
     driver_path = request.config.getoption("--drivers")
     options = ChromeOptions()
     browser = webdriver.Chrome(options=options, executable_path=f"{driver_path}/chromedriver")
-    request.addfinalizer(browser.close)
     browser.maximize_window()
+    request.addfinalizer(browser.close)
     return browser
 
 
