@@ -14,9 +14,11 @@ class CreditScorePage():
     CAR_MARK = "Hyundai"
     CAR_MODEL = "Creta"
     CAR_COMPLECTATION = "2.0 (149HP) 4WD BI2 (G043/G039) (2021) 21MY 6AT (1 674 000 ₽)"
+    CAR_PRISE = "1500000"
     KASKO_PRODUCT = "105"
     SAFE_LIFE = "2849"
     KASKO_PRICE_SUM = "30000"
+
 
     # Локаторы
     CAR_MARK_SELECT = (By.CSS_SELECTOR, "select#car_brand_id")
@@ -33,6 +35,8 @@ class CreditScorePage():
     SELECT_TEL_NUM_PLACE = (By.CSS_SELECTOR,"#client_phone")
     CLICK_SAFE_EQUALS = (By.CSS_SELECTOR, "#saveCalculationForm button")
     CLOSE_NEW_APPLICATION_BUTTON = (By.CSS_SELECTOR, "#alert-btn-ok")
+    VECHICAL_PRISE = (By.CSS_SELECTOR, "#price_before")
+
 
     def make_random(self):
         f = Faker('ru_RU')
@@ -115,3 +119,9 @@ class CreditScorePage():
     def click_new_application_confirm(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep).until(EC.presence_of_element_located(CreditScorePage.CLOSE_NEW_APPLICATION_BUTTON))
         element.click()
+
+    def input_vehical_prise(self, time_sleep=1):
+        element = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(CreditScorePage.VECHICAL_PRISE))
+        element.click()
+        element.send_keys(Keys.CONTROL + "a")
+        element.send_keys(Keys.BACK_SPACE, CreditScorePage.CAR_PRISE)
