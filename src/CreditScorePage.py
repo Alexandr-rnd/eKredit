@@ -1,6 +1,7 @@
 import time
 
 from faker import Faker
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -18,6 +19,7 @@ class CreditScorePage():
     KASKO_PRODUCT = "105"
     SAFE_LIFE = "2849"
     KASKO_PRICE_SUM = "30000"
+    ADDITIONAL_EQUPMENT = "10000"
 
 
     # Локаторы
@@ -36,6 +38,9 @@ class CreditScorePage():
     CLICK_SAFE_EQUALS = (By.CSS_SELECTOR, "#saveCalculationForm button")
     CLOSE_NEW_APPLICATION_BUTTON = (By.CSS_SELECTOR, "#alert-btn-ok")
     VECHICAL_PRISE = (By.CSS_SELECTOR, "#price_before")
+    BUTTON_NOTIF_CLOSE = (By.CSS_SELECTOR,"button#notification-close")
+    PRICE_ADDITIONAL_EQUPMENT = ((By.CSS_SELECTOR, "input#price_after"))
+
 
 
     def make_random(self):
@@ -125,3 +130,28 @@ class CreditScorePage():
         element.click()
         element.send_keys(Keys.CONTROL + "a")
         element.send_keys(Keys.BACK_SPACE, CreditScorePage.CAR_PRISE)
+
+
+    def button_close_notif(self, time_sleep=1):
+        try:
+            ignored_exceptions = (NoSuchElementException, StaleElementReferenceException)
+            WebDriverWait(self, time_sleep, ignored_exceptions=ignored_exceptions).until \
+                (EC.element_to_be_clickable((By.CSS_SELECTOR, "iframe#carrot-messenger-frame")))
+            time.sleep(1)
+            frame1 = WebDriverWait(self, time_sleep, ignored_exceptions=ignored_exceptions).until \
+                (EC.element_to_be_clickable((By.CSS_SELECTOR, "iframe#carrot-messenger-frame")))
+            self.switch_to.frame(frame1)
+            element = WebDriverWait(self, time_sleep, ignored_exceptions=ignored_exceptions) \
+                .until(EC.element_to_be_clickable(CreditScorePage.BUTTON_NOTIF_CLOSE))
+            element.click()
+            self.switch_to.default_content()
+            time.sleep(1)
+        except:
+            pass
+
+    def input_additional_equpment_price(self, time_sleep=1):
+        element = WebDriverWait(self, time_sleep).until(
+            EC.visibility_of_element_located(CreditScorePage.PRICE_ADDITIONAL_EQUPMENT))
+        element.click()
+        element.send_keys(Keys.CONTROL + "a")
+        element.send_keys(Keys.BACK_SPACE, CreditScorePage.ADDITIONAL_EQUPMENT)

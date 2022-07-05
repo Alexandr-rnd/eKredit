@@ -1,3 +1,4 @@
+import os
 import random
 import time
 from selenium.webdriver import Keys
@@ -9,9 +10,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 
 class PrepearPage():
-    PASSPORT = "C:\Dev\eKredit\docks\passport.pdf"
+    PASSPORT =  "C:\Dev\eKredit\docks\passport.pdf"
     DRIVER_LICENCE = "C:\Dev\eKredit\docks\drivers.pdf"
-    CONCEDENCE = "C:\Dev\eKredit\docks\Consedence.pdf"
+    CONCEDENCE =  "C:\Dev\eKredit\docks\Consedence.pdf"
     NUMBER_SERIES = "6014"
     FAMILY_STATUS_NO_MARRIED = (By.XPATH, "//p[text()='Холост / Не замужем']")
     CHILDREN = "0"
@@ -60,27 +61,25 @@ class PrepearPage():
     SELECT_ORGANIZATION_NAME = (By.CSS_SELECTOR, "#work_organization_name input")
     SELECT_ORGANIZATION_PHONE = (By.CSS_SELECTOR, "#work_organizationPhone input")
     SELECT_POST_NAME = (By.CSS_SELECTOR, "div.sc-jvfqPk")
-    # SELECT_POST_NAME= (By.XPATH, "/html/body/div[1]/div[1]/div/div/main/div/div/div/div[2]/div/div/div/div[2]/div/div[2]/div[2]/div[6]/div/div/div")
     EXPERIENCE_WORK = (By.CSS_SELECTOR, "#work_careerStartTime input")
     AGE_EXPERIENCE_WORK = (By.CSS_SELECTOR, "#work_experienceTime>div.sc-hHfuMS")
     SELECT_AVERGE_INCOME = (By.CSS_SELECTOR, "#profit_mainprofit input")
     SELECT_EXTRA_AVERGE_INCOME = (By.CSS_SELECTOR, "#profit_addedprofit input")
     INPUT_CONSEDENCE = (By.CSS_SELECTOR, "#sign input.jsiCud")
     OK_FIND_PERSONAL_DATA = (By.XPATH, "//button[text()='Ок']")
-    BUTTON_SAVE = (By.XPATH,"//button[text()='Сохранить']")
-
+    BUTTON_SAVE = (By.XPATH, "//button[text()='Сохранить']")
+    BUTTON_SEND_TO_PROCESS = (By.XPATH, "//button[text()='Отправить заявку в банки']")
+    BUTTON_SELECT_GAZPROM = (By.XPATH, "//span[text()='Газпромбанк']")
+    BUTTON_SELECT_OFFER_GAZPROM = (By.XPATH, "/html/body/div[3]/div[2]/div[8]/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div/table[2]/tbody/tr[8]/td[6]/label/span")
+    BUTTON_SEND_OFFER_TO_RKK = (By.XPATH, "//td/div/div/a[text()='Отправить заявку']")
     def input_passport(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep) \
             .until(EC.presence_of_element_located(PrepearPage.INPUT_PASSPORT))
         element.send_keys(PrepearPage.PASSPORT)
-        # banner = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(PrepearPage.COMPLETE_INPUT_BANNER))
-        # banner.click()
 
     def input_driver_licence(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep).until(EC.presence_of_element_located(PrepearPage.INPUT_PASSPORT))
         element.send_keys(PrepearPage.DRIVER_LICENCE)
-        # banner = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(PrepearPage.COMPLETE_INPUT_BANNER))
-        # banner.click()
 
     def close_found_personal_data(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep).until(
@@ -92,7 +91,7 @@ class PrepearPage():
         element = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(PrepearPage.INPUT_FIO))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(CreditScorePage.make_random("name") + " " + CreditScorePage.make_random(
             "surename") + " " + CreditScorePage.make_random("surename"), Keys.ENTER)
         time.sleep(1)
@@ -120,9 +119,6 @@ class PrepearPage():
         element = WebDriverWait(self, time_sleep).until(EC.
                                                         visibility_of_element_located(PrepearPage.ISSUER_CODE))
         element.send_keys(PrepearPage.ISSUER_NUMBER_VALUE)
-        # element2 = WebDriverWait(self, time_sleep).until(
-        #     EC.visibility_of_element_located(PrepearPage.SELECT_ISSURE_PLASE))
-        # element2.click()
 
     # def issure_passport(self, time_sleep=1):
     #     element = WebDriverWait(self, time_sleep).until(EC.presence_of_element_located(PrepearPage.ISSUER_PASSPORT))
@@ -134,7 +130,7 @@ class PrepearPage():
         element = WebDriverWait(self, time_sleep).until(EC.presence_of_element_located(PrepearPage.BIRTH_PLACE))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(PrepearPage.BIRTH_PLASE_VALUE)
 
     def birth_date(self, time_sleep=1):
@@ -157,7 +153,7 @@ class PrepearPage():
             EC.visibility_of_element_located(PrepearPage.SELECT_DRIVE_LICENSE))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(Keys.BACK_SPACE, PrepearPage.DRIVER_LICENCE_NUM)
 
     def select_data_drive_licence(self, time_sleep=1):
@@ -165,7 +161,7 @@ class PrepearPage():
             EC.visibility_of_element_located(PrepearPage.SELECT_DATA_DRIVE_LICENSE))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(PrepearPage.DRIVER_LICENCE_DATE)
 
     def select_registration_adress(self, time_sleep=1):
@@ -173,7 +169,7 @@ class PrepearPage():
             EC.visibility_of_element_located(PrepearPage.SELECT_REGESTRATION_ADRESS))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(Keys.BACK_SPACE, PrepearPage.ADRESS_REGISTRATION)
         time.sleep(1)
         element.click()
@@ -184,7 +180,7 @@ class PrepearPage():
             EC.presence_of_element_located(PrepearPage.SELECT_REGESTRATION_DATE))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(Keys.BACK_SPACE, PrepearPage.REGISTRATION_DATE)
 
     def select_registration_index(self, time_sleep=1):
@@ -192,7 +188,7 @@ class PrepearPage():
             EC.visibility_of_element_located(PrepearPage.SELECT_REGESTRATION_INDEX))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(Keys.BACK_SPACE, PrepearPage.INDEX_REGISTRATION)
 
     def input_trust_person_fio(self, time_sleep=1):
@@ -200,12 +196,12 @@ class PrepearPage():
                                                         presence_of_element_located(PrepearPage.SELECT_TRUSTED_PERSON))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
-        # element.send_keys(CreditScorePage.make_random("name") + " " + CreditScorePage.make_random(
-        #   "surename") + " " + CreditScorePage.make_random("surename"), Keys.ENTER)
-        element.send_keys("Тест Тест Тест", Keys.ENTER)
         element.send_keys(Keys.BACK_SPACE)
+        element.send_keys("Тест Тест Тест", Keys.ENTER)
         time.sleep(1)
+        element.click()
+        time.sleep(1)
+        element.send_keys(Keys.BACK_SPACE)
 
     def select_trust_person_phone_number(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep).until(
@@ -215,6 +211,7 @@ class PrepearPage():
         actions.send_keys(PrepearPage.TRUST_PERSONE_PHONE_NUMBER)
         actions.perform()
         time.sleep(1)
+        element.click()
         # element.send_keys(Keys.BACK_SPACE, PrepearPage.TRUST_PERSONE_PHONE_NUMBER)
 
     def choose_work_type(self, time_sleep=1):
@@ -232,7 +229,7 @@ class PrepearPage():
             EC.presence_of_element_located(PrepearPage.SELECT_ORGANIZATION_NAME))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(Keys.BACK_SPACE, PrepearPage.ORGANISATION_NAME)
         time.sleep(2)
         element.click()
@@ -243,7 +240,7 @@ class PrepearPage():
             EC.presence_of_element_located(PrepearPage.SELECT_ORGANIZATION_PHONE))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(Keys.BACK_SPACE, PrepearPage.PHONE_ORGANIZATION)
 
     def select_post_name(self, time_sleep=1):
@@ -257,18 +254,19 @@ class PrepearPage():
             EC.visibility_of_element_located(PrepearPage.FIRS_POST))
         element2.click()
 
-
     def select_experience_work(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep).until(
             EC.presence_of_element_located(PrepearPage.EXPERIENCE_WORK))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(Keys.BACK_SPACE, PrepearPage.EXPERIENCE_WORK_DATE)
 
     def choose_work_experience_age(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep).until(
             EC.presence_of_element_located(PrepearPage.AGE_EXPERIENCE_WORK))
+        element.click()
+        time.sleep(1)
         element.click()
         element2 = WebDriverWait(self, time_sleep).until(
             EC.visibility_of_element_located(PrepearPage.EXPERIENCE_AGE))
@@ -279,7 +277,7 @@ class PrepearPage():
             EC.presence_of_element_located(PrepearPage.SELECT_AVERGE_INCOME))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(Keys.BACK_SPACE, PrepearPage.INCOME_SUMM)
 
     def averge_extra_income(self, time_sleep=1):
@@ -287,7 +285,7 @@ class PrepearPage():
             EC.presence_of_element_located(PrepearPage.SELECT_EXTRA_AVERGE_INCOME))
         element.click()
         element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.DELETE)
+        element.send_keys(Keys.BACK_SPACE)
         element.send_keys(Keys.BACK_SPACE, PrepearPage.INCOME_SUMM)
 
     def input_consedence(self, time_sleep=1):
@@ -298,5 +296,26 @@ class PrepearPage():
         element = WebDriverWait(self, time_sleep).until(
             EC.element_to_be_clickable(PrepearPage.FAMILY_STATUS_NO_MARRIED))
         element.click()
-        time.sleep(3)
-        self.refresh()
+
+    def press_send_to_process_button(self, time_sleep=1):
+        element = WebDriverWait(self, time_sleep).until(
+            EC.element_to_be_clickable(PrepearPage.BUTTON_SEND_TO_PROCESS))
+        element.click()
+
+    def press_select_gazprom(self, time_sleep=1):
+        WebDriverWait(self, time_sleep).until(
+            EC.element_to_be_clickable(PrepearPage.BUTTON_SELECT_GAZPROM))
+        time.sleep(10)
+        element = WebDriverWait(self, time_sleep).until(
+            EC.visibility_of_element_located(PrepearPage.BUTTON_SELECT_GAZPROM))
+        element.click()
+
+    def press_select_offer_gazprom(self, time_sleep=1):
+        element = WebDriverWait(self, time_sleep).until(
+            EC.element_to_be_clickable(PrepearPage.BUTTON_SELECT_OFFER_GAZPROM))
+        element.click()
+
+    def press_send_offer_to_gazprom(self, time_sleep=1):
+        element = WebDriverWait(self, time_sleep).until(
+            EC.element_to_be_clickable(PrepearPage.BUTTON_SEND_OFFER_TO_RKK))
+        element.click()

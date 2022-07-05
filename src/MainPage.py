@@ -21,10 +21,11 @@ class MainPage():
     BUTTON_GO_TO_OPEN_APPLICATION = (By.XPATH, "//button[text()='Открыть']")
     VIEW_APPLICATION = (By.XPATH, "//button[text()='Рассмотрение заявки']")
     BUTTON_COUNT_CREDIT = (By.XPATH, "//button[text()='Рассчитать кредит']")
-    CLOSE_BUNNER = (By.CSS_SELECTOR, "div.popup__close-button")
     PREPARE_APPLICATION = (By.XPATH, "//a[text()='Подготовить заявку']")
     USER_CONFIG_BUTTON = (By.CSS_SELECTOR, ".nav-button.nav-button--increased-height")
     USER_CONFIG_LABLE = (By.CSS_SELECTOR, ".nav-item--increased-height")
+    CLOSE_BUNNER = (By.CSS_SELECTOR, "div.popup__close-button")
+
 
 
     def press_create_new_application(self, time_sleep=1):
@@ -120,3 +121,4 @@ class MainPage():
         element = WebDriverWait(self, time_sleep).until(
             EC.visibility_of_element_located(MainPage.USER_GPB))
         element.click()
+
