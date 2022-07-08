@@ -146,7 +146,8 @@ class PrepearPage():
     def series_number(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep).until(EC.presence_of_element_located(PrepearPage.SERIAS_NUMBER))
         element.click()
-        element.send_keys(Keys.BACK_SPACE, PrepearPage.NUMBER_SERIES + str(random.randint(100000, 999999)), Keys.ENTER)
+        element.clear()
+        element.send_keys(Keys.BACK_SPACE, PrepearPage.NUMBER_SERIES +str(random.randint(100000, 999999)), Keys.ENTER)
 
     def select_drive_licence(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep).until(
