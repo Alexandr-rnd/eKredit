@@ -165,6 +165,13 @@ class PrepearPage():
         element.send_keys(Keys.BACK_SPACE)
         element.send_keys(PrepearPage.DRIVER_LICENCE_DATE)
 
+    #def select_data_drive_licence(self, time_sleep=1):
+     #   element = WebDriverWait(self, time_sleep).until(
+      #      EC.visibility_of_element_located(PrepearPage.SELECT_DATA_DRIVE_LICENSE))
+       # actionchains = ActionChains(self)
+        #actionchains.move_to_element(element).click(element).send_keys(PrepearPage.SELECT_DATA_DRIVE_LICENSE).perform()
+
+
     def select_registration_adress(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep).until(
             EC.visibility_of_element_located(PrepearPage.SELECT_REGESTRATION_ADRESS))
