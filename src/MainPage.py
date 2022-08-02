@@ -17,7 +17,7 @@ class MainPage():
     GET_APPLICATION_LIST = (By.XPATH, "//span[text()='Заявки']/parent::div")
     GET_APPLICATION_LIST_IN_WORK = (By.XPATH, "//a[text()='В работе']")
     INPUT_PLACE = (By.CSS_SELECTOR, "input[placeholder]")
-    BUTTON_GO_TO_SEARCH_APPLICATION = (By.CSS_SELECTOR, "button.sc-kYnagK")
+    BUTTON_GO_TO_SEARCH_APPLICATION = (By.CSS_SELECTOR, "button.sc-dBoRSD")
     BUTTON_GO_TO_OPEN_APPLICATION = (By.XPATH, "//button[text()='Открыть']")
     VIEW_APPLICATION = (By.XPATH, "//button[text()='Рассмотрение заявки']")
     BUTTON_COUNT_CREDIT = (By.XPATH, "//button[text()='Рассчитать кредит']")
@@ -29,8 +29,10 @@ class MainPage():
 
 
     def press_create_new_application(self, time_sleep=1):
+        time.sleep(1)
         element = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(MainPage.CREATE_APPLICATION))
         element.click()
+
 
     def move_to_create_new_application(self, time_sleep=2):
         time.sleep(1)
@@ -38,22 +40,28 @@ class MainPage():
         element.click()
 
     def press_create_new_application_button(self, time_sleep=1):
-        time.sleep(1)
         element = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(MainPage.CREATE_APPLICATION_CREDIT))
+        time.sleep(1)
         element.click()
 
     def press_open_tab_application_list(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(MainPage.GET_APPLICATION_LIST))
+        time.sleep(1)
         element.click()
 
     def press_open_tab_application_list_in_work(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(MainPage.GET_APPLICATION_LIST_IN_WORK))
+        time.sleep(1)
         element.click()
 
     def input_number_of_application(self, time_sleep=1, application_num=None):
         time.sleep(1)
         element = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(MainPage.INPUT_PLACE))
-        element.send_keys(application_num)
+        if application_num == "LAST":
+            with open("fio.txt", "r")as fio:
+                element.send_keys(fio.readline())
+        else:
+            element.send_keys(application_num)
 
     def go_to_search_application(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep)\
@@ -66,6 +74,8 @@ class MainPage():
         element.click()
 
     def button_view_application(self, time_sleep=1):
+        WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(MainPage.VIEW_APPLICATION))
+        time.sleep(2)
         element = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(MainPage.VIEW_APPLICATION))
         element.click()
 

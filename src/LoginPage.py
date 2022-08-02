@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -25,6 +27,7 @@ class LoginPage():
     def press_button_login(self, time_sleep=0):
         element = WebDriverWait(self, time_sleep).until(EC.element_to_be_clickable(LoginPage.LOGIN_BUTTON))
         element.click()
+        time.sleep(2)
 
 
 

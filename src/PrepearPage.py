@@ -1,4 +1,3 @@
-import os
 import random
 import time
 from selenium.webdriver import Keys
@@ -20,7 +19,7 @@ class PrepearPage():
     ISSUER_NUMBER_VALUE = "770-001"
     ISSUER_PASSPORT_VALUE = "ГУ МВД РОССИИ ПО Г. МОСКВЕ"
     BIRTH_DATE_VALUE = "01121980"
-    BIRTH_PLASE_VALUE = "Москва"
+    BIRTH_PLASE_VALUE = "ОДОБРЕНИЕ"
     DRIVER_LICENCE_NUM = "1565 213516"
     DRIVER_LICENCE_DATE = "11.01.2017"
     WORKER = (By.XPATH, "//li/p[text()='Наемный работник']")
@@ -72,6 +71,7 @@ class PrepearPage():
     BUTTON_SELECT_GAZPROM = (By.XPATH, "//span[text()='Газпромбанк']")
     BUTTON_SELECT_OFFER_GAZPROM = (By.XPATH, "/html/body/div[3]/div[2]/div[8]/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div/table[2]/tbody/tr[8]/td[6]/label/span")
     BUTTON_SEND_OFFER_TO_RKK = (By.XPATH, "//td/div/div/a[text()='Отправить заявку']")
+
     def input_passport(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep) \
             .until(EC.presence_of_element_located(PrepearPage.INPUT_PASSPORT))
@@ -88,14 +88,18 @@ class PrepearPage():
         element.click()
 
     def input_clients_fio(self, time_sleep=1):
-        element = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(PrepearPage.INPUT_FIO))
-        element.click()
-        element.send_keys(Keys.CONTROL + "a")
-        element.send_keys(Keys.BACK_SPACE)
-        element.send_keys(CreditScorePage.make_random("name") + " " + CreditScorePage.make_random(
-            "surename") + " " + CreditScorePage.make_random("surename"), Keys.ENTER)
-        time.sleep(1)
-        element.send_keys(Keys.ENTER)
+        with open ("fio.txt", "w") as fio:
+            element = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(PrepearPage.INPUT_FIO))
+            element.click()
+            element.send_keys(Keys.CONTROL + "a")
+            element.send_keys(Keys.BACK_SPACE)
+            surename = CreditScorePage.make_random("surename")
+            name = CreditScorePage.make_random("name")
+            lastname =  CreditScorePage.make_random("surename")
+            fio.write(surename)
+            element.send_keys(surename + " " + name + " " + lastname, Keys.ENTER)
+            time.sleep(1)
+            element.send_keys(Keys.ENTER)
 
     def click_show_all_atributes_passport(self, time_sleep=1):
         element = WebDriverWait(self, time_sleep).until(EC.visibility_of_element_located(PrepearPage.LINK_SHOW))
